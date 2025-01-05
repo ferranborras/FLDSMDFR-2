@@ -6,6 +6,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
+// comprobando si este es el repositorio
+
 public class GameManager : MonoBehaviour
 {
     //ACLARACIONES
