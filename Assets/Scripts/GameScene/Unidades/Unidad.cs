@@ -98,4 +98,9 @@ public class Unidad : MonoBehaviour
         return healthLeft <= 0;
     }
 
+    public virtual void PlayAttack() {
+    }
+
+    public virtual void PlayHit() {
+    }
 }

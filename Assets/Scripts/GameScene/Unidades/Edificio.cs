@@ -59,4 +59,7 @@ public class Edificio : Unidad
     public override float Damage() {
         return base.Damage();
     }
+
+    public override void PlayAttack() { base.PlayAttack(); }
+    public override void PlayHit() { base.PlayHit(); }
 }

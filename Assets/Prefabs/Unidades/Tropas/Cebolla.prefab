@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1412140592954990633}
   - component: {fileID: 8573077416689292069}
   - component: {fileID: 4826588098035981923}
+  - component: {fileID: -1402227973472617338}
   m_Layer: 0
   m_Name: Cebolla
   m_TagString: Untagged
@@ -76,8 +77,8 @@ SpriteRenderer:
   m_SortingLayerID: 1229049851
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.99622643, g: 0.97648215, b: 0.7593877, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 1f6482f0c501b2c459eecabff218d84d, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -117,6 +118,27 @@ MonoBehaviour:
   origin: {x: 0, y: 0}
   healthBar: {fileID: 7760524180448800965}
   speed: 0
+--- !u!95 &-1402227973472617338
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2185037781413537276}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 58bc7978ce1252843897405f9159d9b9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &3131822177868509536
 PrefabInstance:
   m_ObjectHideFlags: 0

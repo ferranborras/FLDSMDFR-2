@@ -53,6 +53,9 @@ public class GameManager : MonoBehaviour
     private float winPercent = .9f;
 
     private List<TropaAI> AiTropas = new List<TropaAI>();
+    [SerializeField] private GameObject AIPlayingImage;
+    private Queue<bool> corrutinas = new Queue<bool>();
+    private AiState state = AiState.generating;
 
     private void Start()
     {
@@ -74,6 +77,12 @@ public class GameManager : MonoBehaviour
         moneyP2 = 5 - (!p1Turn ? 1 : 0);
 
         StartNewTurn();
+    }
+
+    public enum AiState {
+        generating,
+        acting,
+        ending
     }
 
     void Update()
@@ -100,43 +109,70 @@ public class GameManager : MonoBehaviour
 
                     AiMoving = true;
                 }
-
-                // Hacer las acciones
-                print("Check GeneratorAI actions");
-                if (actions != null) {
-                    print("actions.Length" + actions.Length);
-                    foreach (Action action in actions) {
-                        print(action);
-                        action.ApplyInGame(this);
-                    }
-                }
-
-                // Para cada tropa hacer acciones
-                print("Check TropaAI actions");
-                foreach (TropaAI tropaAi in AiTropas) {
-                    TropaWorldModel worldModel = new TropaWorldModel(tropaAi.gameObject.GetComponent<Unidad>());
-                    Debug.Log("unidad is null? " + (worldModel.unidad == null));
-                    worldModel.GenerateFromMap(mapGenerator.map, moneyP2);
-                    actions = tropaAi.PlanActions((WorldModel) worldModel, 2);
-
-                    if (actions != null) {
-                        foreach (Action action in actions) {
-                            action.ApplyInGame(this);
-                            print(action);
-                        }
-                    }
-                }
-
-                print("FIN DE TURNO DE IA");
-                if (vertexSelected != null) {
-                    Debug.Log("22vertexSelected.unidad == null: " + (vertexSelected.unidad == null));
-                    Debug.Log("22vertexSelected: " + vertexSelected.coord);
-                }
-                StartNewTurn();
+                StartCoroutine(StartAiThinking(actions));
             }
 
         }
         ManageCameraMovement();
+    }
+
+    IEnumerator StartAiThinking(Action[] actions)
+    {
+        yield return new WaitForSeconds(.3f);
+        AIPlayingImage.SetActive(true);
+        StartCoroutine(MakeActionsCoroutine(actions, 0));
+        yield return null;
+    }
+
+    IEnumerator NewTurnCoroutine()
+    {
+        yield return new WaitForSeconds(.3f);
+        StartNewTurn();
+        AIPlayingImage.SetActive(false);
+        yield return null;
+    }
+
+    IEnumerator MakeActionsCoroutine(Action[] actions, int i)
+    {
+        if (actions != null) {
+            actions[i].ApplyInGame(this);
+            yield return new WaitForSeconds(.3f);
+
+            if (i < actions.Length-1)
+                StartCoroutine(MakeActionsCoroutine(actions, i+1));
+            else
+                StartCoroutine(TropasActionsCoroutine(0));
+        }
+        else
+            StartCoroutine(TropasActionsCoroutine(0));
+            
+        yield return null;
+    }
+
+    IEnumerator TropasActionsCoroutine(int i)
+    {
+        Action[] actions = null;
+        if (AiTropas.Count > 0) {
+            TropaAI tropaAi = AiTropas[i];
+            TropaWorldModel worldModel = new TropaWorldModel(tropaAi.gameObject.GetComponent<Unidad>());
+            worldModel.GenerateFromMap(mapGenerator.map, moneyP2);
+            actions = tropaAi.PlanActions((WorldModel) worldModel, 2);
+
+            if (actions != null) {
+                foreach (Action action in actions) {
+                    action.ApplyInGame(this);
+                }
+            }
+            yield return new WaitForSeconds(.3f);
+        }
+
+        if (i < AiTropas.Count-1 && actions != null) {
+            StartCoroutine(TropasActionsCoroutine(i+1));
+        }
+        else
+            StartCoroutine(NewTurnCoroutine());
+
+        yield return null;
     }
 
     public void MakeAction(Vector3Int currentCell) {
@@ -388,6 +424,7 @@ public class GameManager : MonoBehaviour
 
                     if (current.attacking != null) {
                         Unidad enemy = current.attacking.GetComponent<Unidad>();
+
                         if (enemy != null) {
                             if (mapGenerator.map[enemy.coord.x, enemy.coord.y].unidad != null) {
                                 print("Current: " + current.coord);
@@ -413,6 +450,9 @@ public class GameManager : MonoBehaviour
                                     }
                                     Destroy(current.attacking.gameObject);
                                 }
+                                else
+                                    enemy.PlayHit();
+                                ally.PlayAttack();
                             }
                         }
                         current.attacking = null;

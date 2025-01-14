@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6317655750116970948}
   - component: {fileID: 8220204318162648686}
   - component: {fileID: 5704989928597925542}
+  - component: {fileID: 3050790689999832028}
   m_Layer: 0
   m_Name: Aceituna
   m_TagString: Untagged
@@ -76,8 +77,8 @@ SpriteRenderer:
   m_SortingLayerID: 1229049851
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.04905659, g: 0.04905659, b: 0.04905659, a: 1}
+  m_Sprite: {fileID: 21300000, guid: a935466f45980604aa1d3a393f5b0640, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -117,6 +118,27 @@ MonoBehaviour:
   origin: {x: 0, y: 0}
   healthBar: {fileID: 3654674588062731817}
   speed: 0
+--- !u!95 &3050790689999832028
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 955108060323447086}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 959725dfc4667cd4fbbc8964b8ba4de3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &8249643585055510412
 PrefabInstance:
   m_ObjectHideFlags: 0

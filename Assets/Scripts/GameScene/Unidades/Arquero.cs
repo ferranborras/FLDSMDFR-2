@@ -10,6 +10,8 @@ public class Arquero : Unidad
     [HideInInspector] public static int deathEarnings { get; set; } = 1;
     [HideInInspector] public static float damage { get; set; } = 10;
 
+    private Animator animator;
+
     public override void Place(Vector2Int cell) {
         base.Place(cell);
     }
@@ -20,6 +22,7 @@ public class Arquero : Unidad
     }
 
     public override void Start() {
+        animator = GetComponent<Animator>();
         base.Start();
     }
 
@@ -59,5 +62,13 @@ public class Arquero : Unidad
         healthBar.UpdateHealth(health/maxHealth);
         
         return base.GetDamage(health);
+    }
+
+    public override void PlayAttack() {
+        animator.SetTrigger("Attack");
+    }
+
+    public override void PlayHit() {
+        animator.SetTrigger("Hit");
     }
 }
